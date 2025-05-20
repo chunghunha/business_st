@@ -184,3 +184,47 @@ df = pd.DataFrame(
 st.map(df)
 
 st.divider()  # 👈 구분선
+
+'# :blue[시각화 라이브러리]'
+
+'#### :orange[Matplotlib: st.pyplot()]'
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+fig, ax = plt.subplots()
+ax.plot(x, y)
+st.pyplot(fig) # 👈 차트 출력
+
+st.divider()  # 👈 구분선
+
+'#### :orange[Altair: st.altair_chart()]'
+import altair as alt
+
+chart_data = pd.DataFrame(
+    np.random.randn(20, 3), 
+    columns=["a", "b", "c"]
+    )
+
+c = (
+   alt.Chart(chart_data)
+   .mark_circle()
+   .encode(
+       x="a", y="b", 
+       size="c", 
+       color="c", 
+       tooltip=["a", "b", "c"]
+       )
+)
+
+st.altair_chart(c, use_container_width=True)
+
+'#### :orange[Plotly: st.plotly_chart()]'
+import plotly.express as px
+
+df = px.data.iris()  
+fig = px.scatter(df, x="sepal_width", y="sepal_length")
+
+st.plotly_chart(fig, key="iris", on_select="rerun")
